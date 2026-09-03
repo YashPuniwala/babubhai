@@ -1,0 +1,236 @@
+I want you to improve the HERO SECTION of my website using the image I have already added to the project.
+
+IMPORTANT ASSET:
+- I have added `babubhai hero.png` inside the `public` folder.
+- Use THIS exact image for the hero section.
+- Do NOT use any other portrait/image for the hero.
+- The image has a transparent background, so treat it as a cutout PNG.
+
+BEFORE MAKING ANY CHANGES:
+1. Inspect the existing hero section carefully.
+2. Inspect `public/babubhai hero.png` and understand its actual dimensions, aspect ratio, transparent padding, and subject positioning.
+3. Check how the current hero image is being rendered.
+4. Make sure the new image is neither unnecessarily huge nor too small.
+5. Check the full hero viewport at desktop, tablet and mobile sizes.
+6. Check whether the subject's face/body is being cropped incorrectly.
+7. Check whether transparent space inside the PNG is affecting its apparent size.
+8. Check alignment with the navbar and the rest of the page.
+9. Only after checking these things, implement the final hero.
+
+HERO DESIGN:
+
+Create a sophisticated, premium editorial hero suitable for a veteran Indian entertainment-industry professional, celebrity manager, producer and consultant.
+
+The hero should feel:
+- timeless
+- prestigious
+- cinematic
+- editorial
+- sophisticated
+- personal
+- established
+- NOT like a modern SaaS website
+- NOT overly flashy
+
+Use the existing website's overall visual language:
+- warm cream / beige base
+- deep charcoal / near-black
+- muted burgundy as the accent
+- subtle warm neutral tones
+
+IMAGE:
+
+Use `public/babubhai hero.png`.
+
+Because the image is already a transparent cutout:
+- Do NOT put it inside a normal rectangular image card.
+- Let the person naturally emerge from the background.
+- Position the subject as the main visual focal point.
+- Use a large scale, but keep the complete composition balanced.
+- Do not crop important parts of the subject.
+- Do not stretch or distort the image.
+- Preserve the original proportions.
+- Make the face and upper body visually dominant without making the person feel oversized.
+- The image should feel integrated into the composition rather than simply placed on the right side.
+
+BACKGROUND:
+
+You ARE allowed to add subtle background texture to make the hero more premium.
+
+Possible treatment:
+- very subtle paper/grain texture
+- extremely subtle film-grain texture
+- soft tonal variation
+- subtle radial lighting behind the subject
+- very faint oversized typography or geometric detail
+
+Keep the texture extremely subtle.
+
+Do NOT add:
+- loud gradients
+- colorful effects
+- glowing neon
+- excessive particles
+- cheesy cinematic effects
+- obvious AI-generated decorative elements
+
+The background should still feel like a luxury editorial/film-industry portfolio.
+
+TYPOGRAPHY:
+
+Keep the existing typography style of the website.
+
+Use strong editorial hierarchy.
+
+The hero should communicate the person's identity immediately.
+
+Keep the existing important content/text unless there is a genuine layout issue.
+
+Make the main name/title visually powerful but elegant.
+
+Use the burgundy accent only where it improves hierarchy.
+
+TEXT COLOR:
+Make sure every text element has sufficient contrast against its actual background.
+
+Do NOT blindly use the same text color everywhere.
+
+For example:
+- dark charcoal/black on cream
+- warm cream/off-white on dark areas
+- burgundy only for important accents
+- muted warm gray for secondary information
+
+IMAGE + TEXT COMPOSITION:
+
+Create a deliberate relationship between the typography and the portrait.
+
+The text should not compete with the face.
+
+The image should feel like it belongs to the page rather than being an image pasted onto it.
+
+Use asymmetry and negative space intelligently.
+
+The final composition should look closer to a premium editorial cover / cinematic personal archive than a generic portfolio website.
+
+PARALLAX / MOTION:
+
+Add subtle parallax effects throughout the website WHERE THEY ACTUALLY IMPROVE THE EXPERIENCE.
+
+For the HERO:
+- portrait should move subtly at a different scroll speed from the background
+- headline/text should have a very subtle independent movement
+- background texture/large decorative typography can move at an even slower speed
+
+Keep all movement slow and sophisticated.
+
+Do NOT overdo the parallax.
+
+The user should never feel like the page is moving excessively.
+
+IMPORTANT:
+- Respect `prefers-reduced-motion`.
+- Disable or significantly reduce parallax for users who prefer reduced motion.
+- Avoid performance-heavy scroll listeners.
+- Use performant transforms where possible.
+- Do not cause layout shifts.
+
+WHOLE WEBSITE:
+
+After fixing the hero, inspect the entire website and add subtle parallax/micro-motion ONLY where it makes visual sense.
+
+Good candidates:
+- Hero portrait
+- Hero typography
+- Large background typography
+- Achievement/section decorative elements
+- Large editorial images
+- Artist imagery where appropriate
+- Subtle section transitions
+
+Do NOT add parallax to every element.
+
+Avoid:
+- buttons constantly moving
+- navigation movement
+- small text moving independently
+- excessive hover animations
+- distracting effects
+
+RESPONSIVENESS:
+
+Make the entire website properly responsive while doing this.
+
+Check at minimum:
+- large desktop
+- standard desktop
+- tablet
+- mobile
+
+For mobile:
+- make sure the hero portrait does not become absurdly large
+- do not crop the face
+- maintain clear text hierarchy
+- avoid horizontal overflow
+- ensure navbar remains usable
+- ensure all sections fit naturally
+- preserve the premium composition rather than simply shrinking desktop
+
+IMPORTANT MOBILE RULE:
+Do NOT just scale the desktop hero down.
+
+Create a proper responsive composition where the portrait and typography have intentional positioning on smaller screens.
+
+VISUAL QA:
+
+Before considering the work finished, inspect the rendered website, not just the code.
+
+Check:
+- hero image scale
+- image positioning
+- face visibility
+- transparent PNG handling
+- text/image balance
+- navbar relationship
+- section spacing
+- typography contrast
+- responsive behavior
+- horizontal overflow
+- parallax smoothness
+- image loading
+- performance
+
+If the PNG contains transparent whitespace that makes the subject appear too small, compensate through CSS/image positioning rather than modifying the actual image file.
+
+Do NOT replace the image.
+
+DO NOT redesign unrelated sections.
+
+The existing:
+- About
+- Stats
+- Experience
+- Artists
+- Achievements
+- Services
+- Footer
+
+should retain their current design and content.
+
+Only make changes to those sections if required for:
+1. responsive behavior,
+2. text contrast/readability,
+3. parallax implementation,
+4. fixing an obvious visual inconsistency caused by the hero changes.
+
+FINAL QUALITY BAR:
+
+The final website should feel like a high-end personal website for someone with decades of experience in Indian cinema and celebrity management.
+
+Think:
+EDITORIAL + CINEMA + LEGACY + LUXURY
+
+NOT:
+STARTUP + SAAS + GENERIC PORTFOLIO.
+
+Most importantly, don't assume the hero image size is correct. Actually inspect `public/babubhai hero.png`, render it, and adjust its scale and positioning based on how the subject visually appears in the browser.

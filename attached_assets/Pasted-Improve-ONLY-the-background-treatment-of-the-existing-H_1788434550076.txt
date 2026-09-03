@@ -1,0 +1,43 @@
+Improve ONLY the background treatment of the existing HERO section.
+
+Create a very subtle animated paper-grain texture using CSS/SVG/code — do NOT add any new image assets.
+
+DESIGN DIRECTION:
+- Keep the existing cream/off-white luxury editorial color palette exactly as the foundation.
+- The background should feel like premium archival paper / high-end cinema editorial print.
+- Add a very fine, organic paper grain/noise texture across the hero.
+- The grain must be extremely subtle and elegant.
+- It should look physical and tactile, NOT like TV static, digital noise, or a dirty overlay.
+- Use low opacity and very small grain particles.
+- Add extremely slow, almost imperceptible movement to the grain so the background feels alive.
+- The animation should be smooth and seamless with no obvious looping.
+- Use CSS/SVG techniques such as an SVG feTurbulence filter, pseudo-element overlay, or another lightweight procedural approach.
+- Do not use an external image or heavy animation library just for the grain.
+
+IMPORTANT:
+- Do NOT change the existing hero layout, typography, portrait, CTA, navigation, or content.
+- Do NOT bring back the large “1977” background text.
+- Do NOT introduce random colors.
+- Maintain the existing cream + black + burgundy + subtle warm-gold visual language.
+- Burgundy should remain an accent, not dominate the background.
+- Keep the texture behind all content and images, with proper layering/z-index.
+- Make sure the texture does not reduce text readability or interfere with the portrait.
+- Avoid excessive blur, glow, gradients, or decorative effects.
+- The final result should feel premium, restrained, timeless, cinematic, and editorial.
+
+RESPONSIVENESS:
+- Make the texture fully responsive across desktop, tablet, and mobile.
+- Keep the same visual intensity at every screen size.
+- Ensure the effect does not cause horizontal overflow or affect page performance.
+- Respect prefers-reduced-motion and disable/minimize the animation for users who prefer reduced motion.
+
+FINAL CHECK:
+Before finishing, inspect the hero at different viewport sizes and verify that:
+1. The grain is visible but extremely subtle.
+2. It never looks like static/noise.
+3. The cream background remains clean and premium.
+4. Text and portrait remain the visual focus.
+5. No unnecessary colors or visual effects were introduced.
+6. The animation is smooth and performance-friendly.
+
+The goal is NOT to make the background visually busy. The goal is to make the existing cream background feel like premium physical paper with a subtle cinematic/editorial character.

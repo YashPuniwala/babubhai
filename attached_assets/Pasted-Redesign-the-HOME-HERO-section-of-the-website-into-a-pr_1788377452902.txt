@@ -1,0 +1,400 @@
+Redesign the HOME / HERO section of the website into a premium editorial-style personal brand website for veteran film producer, celebrity manager, and entertainment consultant Babubhai Thiba.
+
+IMPORTANT:
+Do NOT redesign the entire website. Focus on creating a sophisticated, cinematic, luxury editorial HERO section that fits seamlessly with the existing website's visual language.
+
+REFERENCE DIRECTION:
+Use the attached/reference concept as the main visual inspiration.
+
+The desired aesthetic is:
+- Luxury editorial magazine
+- Indian cinema / film industry heritage
+- Sophisticated and timeless
+- Minimal but visually rich
+- Premium personal-brand website
+- Subtle archival/cinematic feeling
+- NOT flashy
+- NOT a generic Bollywood website
+- NOT overly colorful
+- NOT cluttered
+
+--------------------------------------------------
+1. OVERALL HERO STRUCTURE
+--------------------------------------------------
+
+Create a full-screen desktop hero section with a clear two-column composition.
+
+LEFT:
+All primary content and typography.
+
+RIGHT:
+Babubhai Thiba's portrait.
+
+There should be NO central statistics column.
+
+Do NOT place:
+- 50+ Artists Managed
+- 200+ Film Projects
+- 45+ Years in Cinema
+
+in the center.
+
+The center should instead act as clean negative space / transition between the typography and portrait.
+
+The composition should feel balanced, spacious, and editorial.
+
+Suggested structure:
+
+LEFT SIDE:
+Small eyebrow:
+"SINCE 1977  /  MUMBAI"
+
+Large headline:
+"A CAREER BUILT
+ON PEOPLE.
+NOT SPOTLIGHT."
+
+Use strong editorial typography.
+
+Make "NOT SPOTLIGHT." the visual emphasis using the existing burgundy accent color.
+
+Below the headline:
+
+"From managing India's leading personalities to producing
+memorable stories, the journey has always been about
+understanding people and creating lasting impact."
+
+Keep this copy short and elegant.
+
+Then add a premium CTA:
+"CALL US NOW"
+
+Below it, add a subtle metadata line:
+
+"FILM · TELEVISION · OTT     |     45+ YEARS IN CINEMA"
+
+--------------------------------------------------
+2. RIGHT SIDE PORTRAIT
+--------------------------------------------------
+
+Use the existing image:
+
+public/babubhai hero.png
+
+This is the actual Babubhai Thiba portrait and MUST be used.
+
+Do NOT replace it with another image.
+Do NOT generate a new person.
+Do NOT use stock photography.
+
+The image has a transparent background, so use that advantage.
+
+Position the portrait on the RIGHT side of the hero.
+
+The portrait should be large and visually dominant but must NOT feel oversized or cropped awkwardly.
+
+The lower portion of the portrait can extend close to or slightly beyond the bottom edge of the hero.
+
+Make sure:
+- Face remains completely visible
+- Body does not get unnecessarily cropped
+- Image has enough breathing room
+- It feels naturally integrated into the composition
+- It does not overlap the navigation
+- It does not overpower the headline
+
+Before finalizing, visually inspect the actual rendered image size and adjust width/height/object positioning accordingly.
+
+Do NOT blindly use a fixed image size.
+
+The image should scale responsively based on viewport size.
+
+--------------------------------------------------
+3. BACKGROUND
+--------------------------------------------------
+
+Remove the large "1977" typography currently used in the background.
+
+Do NOT use giant 1977 text.
+
+Instead create a much more subtle editorial/cinematic background.
+
+Use:
+
+- Warm cream / ivory base
+- Extremely subtle paper texture
+- Very subtle film grain
+- Soft archival texture
+- Faint vintage photographic/editorial elements
+- Very low-opacity geometric linework
+- Thin circular framing lines behind the portrait
+- Extremely subtle archival/cinema-inspired details
+
+The texture must be VERY LIGHT.
+
+It should be something the user notices only after looking closely.
+
+Do NOT make the texture dirty, noisy, grungy, or distracting.
+
+Do NOT use obvious film strips everywhere.
+
+Do NOT use heavy gradients.
+
+Do NOT introduce random colors.
+
+--------------------------------------------------
+4. ARCHIVAL / CINEMA DETAILS
+--------------------------------------------------
+
+To make the hero feel more distinctive, introduce extremely subtle archival-inspired visual elements around the edges of the composition.
+
+Examples:
+
+- Faint old newspaper/photo fragments
+- Extremely low-opacity film/contact-sheet details
+- Subtle paper imperfections
+- Thin editorial borders
+- Fine circular linework
+- Tiny typographic annotations
+- Very faint vintage cinema references
+
+These elements should sit in the BACKGROUND only.
+
+Opacity should be very low.
+
+They should never compete with:
+1. Babubhai's portrait
+2. Main headline
+3. CTA
+
+Think "luxury editorial magazine" rather than "movie poster."
+
+--------------------------------------------------
+5. COLOR SYSTEM
+--------------------------------------------------
+
+First inspect the EXISTING website.
+
+Use the existing website's established color palette as the source of truth.
+
+The primary palette should remain approximately:
+
+- Warm cream / ivory
+- Deep black / charcoal
+- Deep burgundy / wine
+- Very subtle warm gold
+
+Burgundy should be used only for important accents.
+
+Warm gold should be extremely subtle.
+
+Do NOT introduce bright colors.
+
+Do NOT introduce blue, green, purple, orange, or random gradients.
+
+If you find unnecessary colors already being used anywhere in the hero, replace them with colors that belong to the existing website theme.
+
+The entire hero must feel like it belongs to the same visual identity as:
+- About
+- Experience
+- Artists
+- Achievements
+- Services
+
+--------------------------------------------------
+6. TYPOGRAPHY
+--------------------------------------------------
+
+Use a premium editorial typography hierarchy.
+
+The main headline should be bold, large, and confident.
+
+Use the existing typography system where possible.
+
+Recommended visual hierarchy:
+
+Small uppercase eyebrow:
+SINCE 1977 / MUMBAI
+
+Large headline:
+A CAREER BUILT
+ON PEOPLE.
+NOT SPOTLIGHT.
+
+Supporting paragraph:
+Smaller, lighter, comfortable line-height.
+
+CTA:
+Compact and strong.
+
+Metadata:
+Small uppercase typography with letter spacing.
+
+Avoid excessive font styles.
+
+Use only 2 complementary typefaces maximum:
+- Strong modern sans-serif for headings
+- Elegant serif/italic accent where appropriate
+
+Keep the typography sophisticated and restrained.
+
+--------------------------------------------------
+7. DECORATIVE LINEWORK
+--------------------------------------------------
+
+Add subtle thin-line graphic elements around the portrait.
+
+For example:
+
+- Large partial circular outline behind the portrait
+- Thin vertical editorial line
+- Small crosshair/registration-mark style details
+- Tiny horizontal rules
+
+These should feel like an art-direction detail, not UI decoration.
+
+Keep opacity extremely low.
+
+--------------------------------------------------
+8. PARALLAX & MOTION
+--------------------------------------------------
+
+Add subtle parallax interactions.
+
+IMPORTANT:
+The animations should feel premium and slow.
+
+Do NOT make the page feel like a gaming website.
+
+Hero portrait:
+- Very subtle vertical parallax on scroll
+- Slightly slower movement than the page
+
+Background texture:
+- Extremely subtle independent movement
+
+Decorative circular linework:
+- Slight parallax movement
+
+Headline/text:
+- Subtle reveal animation on page load
+- Slight vertical movement while scrolling
+
+CTA:
+- Small hover interaction
+
+Do NOT over-animate.
+
+Avoid:
+- Excessive bouncing
+- Fast transitions
+- Large rotations
+- Aggressive zooming
+- Constant movement
+
+The goal is "cinematic" rather than "animated."
+
+--------------------------------------------------
+9. RESPONSIVE DESIGN
+--------------------------------------------------
+
+The hero MUST be fully responsive.
+
+Desktop:
+Two-column composition:
+LEFT = typography
+RIGHT = portrait
+
+Tablet:
+Reduce typography size and portrait scale while preserving the composition.
+
+Mobile:
+Do NOT simply squeeze the desktop layout.
+
+Create a proper mobile composition:
+
+1. Small eyebrow
+2. Large headline
+3. Supporting text
+4. CTA
+5. Portrait below / partially overlapping the lower section
+6. Metadata at the bottom
+
+The portrait must remain clearly visible.
+
+Do NOT crop the face.
+
+Do NOT allow text to overlap the portrait awkwardly.
+
+Make sure there is no horizontal scrolling.
+
+Check:
+- 1440px
+- 1280px
+- 1024px
+- 768px
+- 480px
+- 375px
+
+--------------------------------------------------
+10. NAVIGATION
+--------------------------------------------------
+
+Keep the existing navigation design.
+
+Do not unnecessarily redesign the navbar.
+
+Make sure the hero does not overlap the navbar.
+
+The navigation should remain clean and minimal.
+
+--------------------------------------------------
+11. IMPORTANT DESIGN RULE
+--------------------------------------------------
+
+The hero should communicate:
+
+"Decades of experience behind the people who are in the spotlight."
+
+It should feel like a sophisticated introduction to a respected entertainment-industry professional.
+
+Do NOT make it look like:
+- A Bollywood fan page
+- A celebrity gossip website
+- A movie production company template
+- A generic portfolio
+- A corporate consulting website
+
+It should feel like a PERSONAL LEGACY / PROFESSIONAL PROFILE.
+
+--------------------------------------------------
+12. FINAL QUALITY CHECK
+--------------------------------------------------
+
+Before considering the implementation complete, inspect the actual rendered website.
+
+Check specifically:
+
+✓ Is the Babubhai image actually loading from public/babubhai hero.png?
+✓ Is the transparent background being handled correctly?
+✓ Is the portrait too large or too small?
+✓ Is his face positioned correctly?
+✓ Is there enough breathing room around the portrait?
+✓ Does the headline have enough visual weight?
+✓ Is the center area clean without the statistics column?
+✓ Is the background texture subtle enough?
+✓ Is the old "1977" background completely removed?
+✓ Are there any unnecessary colors?
+✓ Does every color belong to the existing cream / black / burgundy / subtle gold theme?
+✓ Does the hero visually match the existing Achievements, Experience, Artists and Services sections?
+✓ Does the design still look premium at 1440px?
+✓ Does it remain clean on mobile?
+✓ Are the parallax effects subtle and smooth?
+✓ Are there any overlapping elements?
+✓ Is there any horizontal overflow?
+
+If something looks visually unbalanced, fix it before finishing.
+
+Prioritize visual hierarchy, spacing, proportion, restraint, and premium art direction over adding more elements.
+
+The final result should look like a professionally art-directed luxury editorial website, not an AI-generated template.

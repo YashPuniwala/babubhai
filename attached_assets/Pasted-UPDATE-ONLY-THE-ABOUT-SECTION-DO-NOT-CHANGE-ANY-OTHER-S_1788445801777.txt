@@ -1,0 +1,91 @@
+UPDATE ONLY THE ABOUT SECTION. DO NOT CHANGE ANY OTHER SECTION, COMPONENT, CONTENT, NAVIGATION, COLORS, TYPOGRAPHY SYSTEM, SPACING SYSTEM, OR OVERALL WEBSITE DESIGN.
+
+ABOUT SECTION CHANGE:
+
+Use the image already added to the public folder:
+
+/public/babubhai_about
+
+Use this exact image as the About section portrait.
+
+LAYOUT:
+- Create a clean two-column About section.
+- LEFT SIDE: the Babubhai Thiba portrait.
+- RIGHT SIDE: professional About content.
+- Keep the layout spacious, editorial, premium and minimal.
+- The image should have a strong but elegant visual presence without overwhelming the text.
+- Do NOT crop, distort, stretch, or unnecessarily resize the original image.
+- Maintain the image's natural proportions.
+- On smaller screens, stack the image above the content cleanly.
+
+ABOUT CONTENT:
+Use ONLY factual information that already exists in the website/project content. Do NOT invent achievements, projects, awards, companies, celebrities, dates, relationships, or career details.
+
+Use professional, straightforward copy. NO inspirational quotes, NO slogans, NO dramatic marketing language, and NO AI-sounding phrases.
+
+Suggested structure:
+
+ABOUT
+
+Babubhai Thiba
+
+Babubhai Thiba is a veteran film producer, celebrity manager and industry consultant with more than four decades of experience in India's entertainment industry.
+
+Since beginning his career in Mumbai in 1977, he has worked across film, television and OTT, building long-standing professional relationships with artists, producers and businesses.
+
+His work spans production, celebrity management and industry consultation, with a focus on professional relationships, experience and discretion.
+
+Then add a small factual information row below the paragraph:
+
+1977
+Started in Mumbai
+
+45+ YEARS
+Experience in Cinema
+
+FILM · TELEVISION · OTT
+Areas of Work
+
+Do not add any information that cannot be verified from the existing website content.
+
+IMAGE INTERACTION:
+- Add a subtle premium hover animation to the portrait.
+- Use a very restrained scale effect, around 1.02–1.04 maximum.
+- Add a smooth transition/easing.
+- Do NOT use exaggerated zoom, rotation, distortion, blur, or flashy effects.
+- The image should feel refined and editorial.
+
+PARALLAX:
+- Add a subtle scroll-based parallax effect to the About image.
+- The image should move slightly slower than the surrounding section while scrolling.
+- Keep the movement very small and smooth.
+- Do not let the image jump, drift outside its container, or affect the page layout.
+- Disable or reduce the parallax effect on mobile/touch devices if necessary for performance and usability.
+
+TEXT ANIMATION:
+- Animate the About heading and content when the section enters the viewport.
+- Use a subtle fade + upward movement.
+- Stagger the heading, paragraph and information row slightly.
+- Keep the animation fast, smooth and professional.
+- Do NOT use flashy text effects, letter-by-letter typing, bouncing, excessive scaling, or dramatic reveals.
+
+VISUAL STYLE:
+- Follow the EXISTING website's current visual language exactly.
+- Keep the current cream/editorial/luxury cinema aesthetic.
+- Use the existing color palette only.
+- No new colors.
+- No gradients unless they already exist in the website.
+- Very subtle texture is acceptable if it already matches the existing theme.
+- Maintain the thin borders, restrained spacing and editorial feel already established throughout the website.
+
+IMPORTANT:
+- Do not redesign the entire About section from scratch.
+- Do not modify the Hero section.
+- Do not modify Experience, Artists, Achievements, Services, Header, Footer, or any other section.
+- Do not change existing navigation.
+- Do not change the existing image in the Hero section.
+- Only replace/restructure the About section as described above.
+- Before finishing, check the About section at desktop, tablet and mobile widths.
+- Make sure the portrait is properly aligned, not too large or too small, and does not collide with the text.
+- Make sure all animations are smooth and do not cause layout shift.
+- Keep the final result minimal, professional and premium rather than over-designed.
