@@ -21,21 +21,99 @@ export function App() {
   const [isLoading, setIsLoading] = useState(true);
   const lenisRef = useRef<Lenis | null>(null);
 
-  // Skip loading screen if reduced motion is preferred
+  /* ---------------------------------------------------------
+     FORCE PAGE TO START FROM TOP
+  --------------------------------------------------------- */
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) {
-      setIsLoading(false);
+    // Prevent browser from restoring previous scroll position
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
     }
+
+    // Immediately force top position
+    window.scrollTo(0, 0);
+
+    // Also reset after the browser has finished restoring layout
+    const resetScroll = () => {
+      window.scrollTo(0, 0);
+    };
+
+    requestAnimationFrame(resetScroll);
+
+    return () => {
+      window.removeEventListener('load', resetScroll);
+    };
   }, []);
 
-  // Initialize Lenis + GSAP after loading completes
+  /* ---------------------------------------------------------
+     KEEP PAGE AT TOP WHILE LOADING
+  --------------------------------------------------------- */
+  useEffect(() => {
+    if (!isLoading) return;
+
+    // Force scroll to top while loading screen is visible
+    window.scrollTo(0, 0);
+
+    // Prevent user/browser scrolling during loading
+    const preventScroll = () => {
+      window.scrollTo(0, 0);
+    };
+
+    window.addEventListener('scroll', preventScroll, {
+      passive: false,
+    });
+
+    // Lock body
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('scroll', preventScroll);
+    };
+  }, [isLoading]);
+
+  /* ---------------------------------------------------------
+     WHEN LOADING FINISHES
+     ALWAYS START HERO FROM TOP
+  --------------------------------------------------------- */
+  useEffect(() => {
+    if (isLoading) return;
+
+    // Make absolutely sure the site starts at the hero
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'instant',
+    });
+
+    // Reset Lenis position if it already exists
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, {
+        immediate: true,
+      });
+    }
+
+    // Refresh ScrollTrigger after page is visible
+    requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
+    });
+  }, [isLoading]);
+
+  /* ---------------------------------------------------------
+     INITIALIZE LENIS + GSAP
+  --------------------------------------------------------- */
   useEffect(() => {
     if (isLoading) return;
 
     const lenis = new Lenis({
       duration: 1.15,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      easing: (t) =>
+        Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
@@ -43,6 +121,7 @@ export function App() {
     });
 
     lenisRef.current = lenis;
+
     lenis.on('scroll', ScrollTrigger.update);
 
     const update = (time: number) => {
@@ -52,53 +131,94 @@ export function App() {
     gsap.ticker.add(update);
     gsap.ticker.lagSmoothing(0);
 
-    // Refresh ScrollTrigger after layout settles
+    // Refresh after everything has settled
     const refreshTimeout = setTimeout(() => {
+      window.scrollTo(0, 0);
+      lenis.scrollTo(0, {
+        immediate: true,
+      });
+
       ScrollTrigger.refresh();
-    }, 200);
+    }, 100);
 
     return () => {
       clearTimeout(refreshTimeout);
+
       gsap.ticker.remove(update);
+
       lenis.destroy();
       lenisRef.current = null;
     };
   }, [isLoading]);
 
+  /* ---------------------------------------------------------
+     NAVIGATION
+  --------------------------------------------------------- */
   const handleNavigate = (targetSelector: string) => {
-    const targetElement = document.querySelector(targetSelector) as HTMLElement | null;
-    if (targetElement) {
-      if (lenisRef.current) {
-        lenisRef.current.scrollTo(targetElement, {
-          offset: 0,
-          duration: 1.1,
-        });
-      } else {
-        targetElement.scrollIntoView({ behavior: 'smooth' });
-      }
+    const targetElement = document.querySelector(
+      targetSelector
+    ) as HTMLElement | null;
+
+    if (!targetElement) return;
+
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(targetElement, {
+        offset: 0,
+        duration: 1.1,
+      });
+    } else {
+      targetElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
     }
   };
 
   return (
     <>
-      {/* Loading Screen Overlay */}
-      {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
+      {/* -----------------------------------------------------
+          LOADING SCREEN
+      ----------------------------------------------------- */}
+      {isLoading && (
+        <LoadingScreen
+          onComplete={() => {
+            // Make sure we are still at the top
+            window.scrollTo(0, 0);
 
-      {/* Main Site Content — clip-path reveal from center */}
+            // Only then remove loading screen
+            setIsLoading(false);
+          }}
+        />
+      )}
+
+      {/* -----------------------------------------------------
+          MAIN WEBSITE
+      ----------------------------------------------------- */}
       <motion.div
-        initial={{ clipPath: 'circle(0% at 50% 50%)' }}
+        initial={{
+          opacity: 0,
+          clipPath: 'circle(0% at 50% 50%)',
+        }}
         animate={{
+          opacity: isLoading ? 0 : 1,
           clipPath: isLoading
             ? 'circle(0% at 50% 50%)'
             : 'circle(150% at 50% 50%)',
         }}
         transition={{
-          duration: isLoading ? 0 : 0.9,
-          ease: [0.76, 0, 0.24, 1],
-          delay: isLoading ? 0 : 0.05,
+          opacity: {
+            duration: isLoading ? 0 : 0.15,
+          },
+          clipPath: {
+            duration: isLoading ? 0 : 0.9,
+            ease: [0.76, 0, 0.24, 1],
+            delay: isLoading ? 0 : 0.05,
+          },
         }}
         className="min-h-screen"
-        style={{ backgroundColor: 'var(--bg-dark)' }}
+        style={{
+          backgroundColor: 'var(--bg-dark)',
+        }}
       >
         <Navigation onNavigate={handleNavigate} />
 
