@@ -287,7 +287,7 @@ export const ServicesSection: React.FC = () => {
         isolate
         z-[10]
         overflow-hidden
-        py-24
+        py-14
         md:py-36
       "
       style={{
@@ -310,7 +310,7 @@ export const ServicesSection: React.FC = () => {
           mx-auto
           px-6
           md:px-12
-          mb-14
+           mb-8
           md:mb-16
         "
       >
@@ -385,12 +385,12 @@ export const ServicesSection: React.FC = () => {
           z-[10]
           max-w-[1440px]
           mx-auto
-          px-6
+           px-4
           md:px-12
           grid
           grid-cols-1
           md:grid-cols-3
-          gap-6
+           gap-4
           md:gap-8
         "
       >
@@ -406,17 +406,17 @@ export const ServicesSection: React.FC = () => {
               z-[1]
               flex
               flex-col
-              justify-between
+              justify-start
+              md:justify-between
               overflow-hidden
+              p-5
+              md:p-[clamp(28px,3vw,40px)]
+              min-h-0
+              md:min-h-[320px]
             "
             style={{
               backgroundColor:
                 'var(--bg-light-alt)',
-
-              padding:
-                'clamp(28px, 3vw, 40px)',
-
-              minHeight: '320px',
 
               transition:
                 'background-color 0.5s ease, color 0.5s ease',
@@ -444,7 +444,7 @@ export const ServicesSection: React.FC = () => {
 
               <div
                 data-role="icon"
-                className="mb-6"
+                className="mb-4 md:mb-6"
                 style={{
                   color:
                     'var(--text-muted)',
@@ -462,7 +462,7 @@ export const ServicesSection: React.FC = () => {
 
               <div
                 data-role="line"
-                className="mb-6"
+                className="mb-4 md:mb-6"
                 aria-hidden="true"
                 style={{
                   width: '32px',
@@ -485,7 +485,8 @@ export const ServicesSection: React.FC = () => {
                   font-display
                   font-bold
                   tracking-tight
-                  mb-5
+                  mb-4
+                  md:mb-5
                 "
                 style={{
                   fontSize:
@@ -509,7 +510,8 @@ export const ServicesSection: React.FC = () => {
                   flex
                   flex-col
                   gap-2.5
-                  mb-8
+                   mb-4
+                   md:mb-8
                 "
                 style={{
                   listStyle: 'none',
@@ -587,7 +589,8 @@ export const ServicesSection: React.FC = () => {
               className="
                 relative
                 z-[50]
-                mt-auto
+                mt-4
+                md:mt-auto
               "
               style={{
                 isolation:

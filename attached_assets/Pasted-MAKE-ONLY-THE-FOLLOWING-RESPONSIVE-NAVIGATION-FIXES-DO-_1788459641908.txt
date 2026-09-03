@@ -1,0 +1,126 @@
+MAKE ONLY THE FOLLOWING RESPONSIVE / NAVIGATION FIXES. DO NOT CHANGE THE DESKTOP DESIGN OR OVERALL VISUAL STYLE.
+
+1. GLOBAL RESPONSIVE SPACING
+
+The website currently has too much padding and margin on smaller screens.
+
+Fix the responsive spacing across the ENTIRE website so that:
+- Sections do not have excessive left/right padding on mobile or tablet.
+- Maintain one consistent horizontal page padding system across all sections.
+- Use a sensible responsive container/gutter system rather than giving every section different padding.
+- Keep the content comfortably away from the screen edges.
+- Do not make sections feel cramped.
+- Remove unnecessary large vertical gaps between elements on mobile.
+- Keep spacing consistent between Hero, About, Experience, Artists, Achievements, Services and Footer.
+- Desktop spacing should remain unchanged.
+
+Use responsive breakpoints properly instead of adding random one-off margin/padding fixes.
+
+IMPORTANT:
+Do not independently change padding for individual sections unless required for proper alignment. Establish a consistent responsive spacing system and apply it throughout the website.
+
+2. HERO SECTION — MOBILE LAYOUT
+
+On mobile screens, completely refine the Hero layout.
+
+The Hero should become a clean, centered single-column composition:
+
+- Center-align ALL Hero content.
+- Center the "Babubhai Thiba" heading.
+- Center the Producer / Celebrity Manager / Consultant text.
+- Center the small supporting line.
+- Center the "Call Us Now" button.
+- Center the Hero image.
+- All elements should be properly aligned with each other.
+- Maintain consistent spacing between each element.
+- Do not leave large empty areas between the text and image.
+- Do not allow text to feel too close to the screen edges.
+- Keep the image proportional and visually balanced.
+- Do not distort or unnecessarily crop the image.
+- Do not make the Hero excessively tall on mobile.
+
+The final mobile Hero should feel intentional and editorial, not like a desktop layout squeezed into a phone.
+
+Desktop Hero:
+- Keep the existing desktop two-column layout.
+- Do not change the desktop typography, image size, colors or composition.
+
+3. MOBILE NAVIGATION / HAMBURGER
+
+There is currently an issue where the hamburger menu becomes hidden or partially clipped on mobile.
+
+Fix this properly:
+- The hamburger button must ALWAYS be visible when the mobile navigation is in its visible state.
+- It must never be clipped by the viewport.
+- Make sure its z-index is above the header/background.
+- Make sure the header does not overflow horizontally.
+- Make sure the hamburger has a proper clickable/touch target.
+- Check the header at common mobile widths such as 320px, 360px, 375px, 390px and 430px.
+- Do not allow the hamburger to disappear because of positioning, overflow, transforms, or excessive padding.
+
+4. MOBILE NAVBAR — HIDE UNTIL USER SCROLLS
+
+On mobile ONLY, change the navbar behavior:
+
+INITIAL STATE:
+- When the user first opens the Home page, the mobile navbar should NOT remain constantly visible over the Hero.
+- Keep the Hero visually clean.
+
+SCROLL BEHAVIOR:
+- When the user starts scrolling DOWN, smoothly reveal the mobile navbar.
+- Keep it fixed/sticky at the top while scrolling.
+- The transition should be subtle and smooth.
+- Do not make it jump or cause layout shifts.
+- When appropriate, hide it again when the user scrolls back toward the top.
+- The hamburger must remain visible whenever the navbar is shown.
+- Do not apply this hide-on-scroll behavior to desktop.
+
+IMPORTANT:
+Use an efficient scroll implementation.
+Avoid expensive scroll listeners that cause frame drops.
+Prefer requestAnimationFrame, passive listeners, or an appropriate lightweight approach.
+
+5. RESPONSIVE CONSISTENCY
+
+Check the complete website on:
+- 320px
+- 360px
+- 375px
+- 390px
+- 430px
+- tablet widths
+- desktop
+
+Look specifically for:
+- Excessive margins
+- Excessive padding
+- Horizontal overflow
+- Elements touching screen edges
+- Misaligned text
+- Hidden buttons
+- Clipped hamburger
+- Images overflowing containers
+- Unexpected horizontal scrolling
+- Inconsistent section spacing
+
+Do not fix one screen by breaking another.
+
+IMPORTANT:
+Do NOT change:
+- Website content
+- Hero image
+- About image
+- Desktop Hero design
+- Colors
+- Typography
+- Actors/Artists list
+- About section content
+- Experience
+- Achievements
+- Services
+- Footer content
+- Overall visual theme
+
+ONLY improve responsive spacing, mobile Hero alignment, mobile hamburger visibility, and mobile navbar scroll behavior.
+
+Before finishing, test the actual responsive layout rather than assuming the CSS is correct.

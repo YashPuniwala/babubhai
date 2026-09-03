@@ -148,6 +148,7 @@ export const HeroSection: React.FC = () => {
           ref={copyRef}
           className="hero-copy relative z-[2]"
           style={{
+            textAlign: isMobile ? 'center' : undefined,
             transform: isMobile
               ? undefined
               : 'translateX(20px)',
@@ -202,7 +203,13 @@ export const HeroSection: React.FC = () => {
             television, OTT and entertainment management.
           </p>
 
-          <div className="hero-action">
+          <div
+            className="hero-action"
+            style={{
+              display: isMobile ? 'flex' : undefined,
+              justifyContent: isMobile ? 'center' : undefined,
+            }}
+          >
             <MagneticButton
               href="tel:+919867343123"
               variant="dark"

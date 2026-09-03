@@ -346,7 +346,7 @@ img {
     display: flex;
     flex-direction: column;
     min-height: 0;
-    padding: 118px 24px 0;
+    padding: 76px 20px 0;
   }
 
   .hero-copy {
@@ -358,6 +358,7 @@ img {
   .hero-eyebrow {
     margin-bottom: 1rem;
     font-size: 10px;
+    justify-content: center;
   }
 
   .hero-title {
@@ -374,7 +375,7 @@ img {
 
   .hero-rule {
     width: 55%;
-    margin: 1.15rem 0 0.85rem;
+    margin: 1.15rem auto 0.85rem;
   }
 
   .hero-intro {
@@ -385,12 +386,13 @@ img {
 
   .hero-action {
     margin-top: 1.35rem;
+    justify-content: center;
   }
 
   .hero-portrait-stage {
     min-height: 0;
     height: auto;
-    margin: 0 -24px;
+    margin: 0 -20px;
     padding-top: 0.4rem;
     justify-content: center;
     overflow: visible;
@@ -410,14 +412,14 @@ img {
   }
 
   .hero-portrait {
-    width: 126vw;
-    margin: 0 -3vw -1px 0;
+    width: 112vw;
+    margin: 0 auto -1px;
   }
 
   .hero-footer {
     grid-template-columns: 1fr auto 1fr;
     gap: 0.5rem;
-    padding: 0 24px 1rem;
+    padding: 0 20px 1rem;
     font-size: 8px;
   }
 

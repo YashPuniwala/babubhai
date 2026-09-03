@@ -12,6 +12,10 @@ interface NavigationProps {
 export const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(
+    () => typeof window !== 'undefined' && window.innerWidth < 1024
+  );
+  const [mobileNavVisible, setMobileNavVisible] = useState(false);
 
   useEffect(() => {
     const trigger = ScrollTrigger.create({
@@ -23,6 +27,49 @@ export const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
 
     return () => {
       trigger.kill();
+    };
+  }, []);
+
+  useEffect(() => {
+    const updateViewport = () => {
+      setIsMobileViewport(window.innerWidth < 1024);
+    };
+
+    updateViewport();
+    window.addEventListener('resize', updateViewport);
+
+    return () => {
+      window.removeEventListener('resize', updateViewport);
+    };
+  }, []);
+
+  useEffect(() => {
+    let frame = 0;
+
+    const updateVisibility = () => {
+      frame = 0;
+      const atTop = window.scrollY <= 8;
+      setMobileNavVisible(!atTop);
+
+      if (atTop) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    const handleScroll = () => {
+      if (!frame) {
+        frame = window.requestAnimationFrame(updateVisibility);
+      }
+    };
+
+    updateVisibility();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (frame) {
+        window.cancelAnimationFrame(frame);
+      }
     };
   }, []);
 
@@ -48,11 +95,13 @@ export const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
         backgroundColor: isScrolled ? 'var(--bg-light)' : 'transparent',
         borderBottom: isScrolled ? '1px solid var(--divider-light)' : '1px solid transparent',
         padding: isScrolled ? '14px 0' : '20px 0',
-        transition: 'background-color 0.5s ease, border-color 0.5s ease, padding 0.4s ease',
+        transform: isMobileViewport && !mobileNavVisible ? 'translateY(-100%)' : 'translateY(0)',
+        pointerEvents: isMobileViewport && !mobileNavVisible ? 'none' : 'auto',
+        transition: 'background-color 0.5s ease, border-color 0.5s ease, padding 0.4s ease, transform 0.35s ease',
         boxShadow: isScrolled ? '0 1px 8px rgba(0,0,0,0.04)' : 'none',
       }}
     >
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12 flex items-center justify-between">
+      <div className="w-full max-w-[1440px] mx-auto px-6 md:px-12 flex items-center justify-between">
 
         {/* Logo / Name */}
         <a
@@ -121,7 +170,8 @@ export const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
         {/* Mobile Hamburger */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden flex items-center justify-center"
+          type="button"
+          className="lg:hidden flex shrink-0 items-center justify-center relative z-[60]"
           style={{
             color: isScrolled ? 'var(--text-dark)' : 'var(--text-light)',
             transition: 'color 0.5s ease',
