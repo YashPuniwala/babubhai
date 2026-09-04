@@ -6,11 +6,19 @@ import { AboutSection } from './AboutSection';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export const HeroSection: React.FC = () => {
+export const HeroSection: React.FC<{ ready?: boolean }> = ({ ready = false }) => {
   const sectionRef = useRef<HTMLElement>(null);
   const portraitRef = useRef<HTMLImageElement>(null);
   const portraitStageRef = useRef<HTMLDivElement>(null);
   const copyRef = useRef<HTMLDivElement>(null);
+  // Individual hero element refs for stagger animation
+  const eyebrowRef = useRef<HTMLParagraphElement>(null);
+  const titleLine1Ref = useRef<HTMLSpanElement>(null);
+  const titleLine2Ref = useRef<HTMLSpanElement>(null);
+  const rolesRef = useRef<HTMLDivElement>(null);
+  const ruleRef = useRef<HTMLDivElement>(null);
+  const introRef = useRef<HTMLParagraphElement>(null);
+  const actionRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -23,65 +31,109 @@ export const HeroSection: React.FC = () => {
     return () => window.removeEventListener('resize', update);
   }, []);
 
+  /* ---------------------------------------------------------
+   * STEP 1: Pre-hide all elements on mount so they are
+   * invisible while the loading screen is on top.
+   * This runs once, immediately, before any animation.
+   * --------------------------------------------------------- */
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+    if (prefersReducedMotion) return;
+
+    const staggerTargets = [
+      eyebrowRef.current,
+      titleLine1Ref.current,
+      titleLine2Ref.current,
+      rolesRef.current,
+      ruleRef.current,
+      introRef.current,
+      actionRef.current,
+    ].filter(Boolean);
+
+    gsap.set(staggerTargets, { opacity: 0, y: 24 });
+    gsap.set(portraitRef.current, {
+      opacity: 0,
+      y: 20,
+      scale: 0.985,
+      filter: 'grayscale(0.25) sepia(6%) brightness(0.96) contrast(1.02)',
+    });
+  }, []); // ← once only, on mount
+
+  /* ---------------------------------------------------------
+   * STEP 2: Fire entrance animation ONLY after loading screen
+   * has fully exited (ready === true). Re-runs if isMobile
+   * changes so parallax stays correct after resize.
+   * --------------------------------------------------------- */
+  useEffect(() => {
+    // Do nothing until the loading screen has fully left
+    if (!ready) return;
+
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)'
     ).matches;
 
     const section = sectionRef.current;
-
     if (!section) return;
 
     if (prefersReducedMotion) {
-      gsap.set([copyRef.current, portraitRef.current], {
-        clearProps: 'all',
-      });
+      // Immediately show everything for reduced-motion users
+      gsap.set(
+        [
+          copyRef.current,
+          portraitRef.current,
+          eyebrowRef.current,
+          titleLine1Ref.current,
+          titleLine2Ref.current,
+          rolesRef.current,
+          ruleRef.current,
+          introRef.current,
+          actionRef.current,
+        ],
+        { clearProps: 'all' }
+      );
       return;
     }
 
     const ctx = gsap.context(() => {
-      gsap.set(copyRef.current, {
-        opacity: 0,
-        y: 18,
-      });
+      const intro = gsap.timeline({ delay: 0.08 });
 
-      gsap.set(portraitRef.current, {
-        opacity: 0,
-        y: 20,
-        scale: 0.985,
-        filter:
-          'grayscale(0.25) sepia(6%) brightness(0.96) contrast(1.02)',
-      });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const heroEls: { ref: React.RefObject<any>; pos: number }[] = [
+        { ref: eyebrowRef,    pos: 0    },
+        { ref: titleLine1Ref, pos: 0.10 },
+        { ref: titleLine2Ref, pos: 0.18 },
+        { ref: rolesRef,      pos: 0.27 },
+        { ref: ruleRef,       pos: 0.35 },
+        { ref: introRef,      pos: 0.42 },
+        { ref: actionRef,     pos: 0.52 },
+      ];
 
-      const intro = gsap.timeline({
-        delay: 0.22,
-      });
-
-      intro
-        .to(
-          copyRef.current,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.75,
-            ease: 'power3.out',
-          },
-          0.1
-        )
-        .to(
-          portraitRef.current,
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            filter:
-              'grayscale(0) sepia(0%) brightness(1) contrast(1)',
-            duration: 1.1,
-            ease: 'power3.out',
-          },
-          0.18
+      heroEls.forEach(({ ref, pos }) => {
+        if (!ref.current) return;
+        intro.to(
+          ref.current,
+          { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out' },
+          pos
         );
+      });
 
+      // Portrait fades + rises in parallel with text
+      intro.to(
+        portraitRef.current,
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: 'grayscale(0) sepia(0%) brightness(1) contrast(1)',
+          duration: 1.1,
+          ease: 'power3.out',
+        },
+        0.15
+      );
+
+      // Desktop-only scroll parallax
       if (!isMobile) {
         gsap.to(portraitStageRef.current, {
           y: 34,
@@ -108,7 +160,7 @@ export const HeroSection: React.FC = () => {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [isMobile]);
+  }, [isMobile, ready]); // ← re-runs if mobile breakpoint changes
 
   // ---------------------------------------------------------
   // DESKTOP — unchanged, original grid layout
@@ -146,10 +198,9 @@ export const HeroSection: React.FC = () => {
           <div
             ref={copyRef}
             className="hero-copy relative z-[2]"
-            style={{
-            }}
+            style={{}}
           >
-            <p className="editorial-eyebrow hero-eyebrow">
+            <p ref={eyebrowRef} className="editorial-eyebrow hero-eyebrow">
               SINCE 1977{' '}
               <span className="hero-eyebrow-sep" aria-hidden="true">
                 ·
@@ -158,11 +209,11 @@ export const HeroSection: React.FC = () => {
             </p>
 
             <h1 className="hero-title font-display font-bold tracking-tight">
-              <span className="block">Babubhai</span>
-              <span className="block">Thiba</span>
+              <span className="block" ref={titleLine1Ref}>Babubhai</span>
+              <span className="block" ref={titleLine2Ref}>Thiba</span>
             </h1>
 
-            <div className="hero-roles">
+            <div className="hero-roles" ref={rolesRef}>
               <span className="block">
                 Producer{' '}
                 <span className="hero-pipe" aria-hidden="true">
@@ -179,14 +230,14 @@ export const HeroSection: React.FC = () => {
               </span>
             </div>
 
-            <div className="hero-rule" aria-hidden="true" />
+            <div className="hero-rule" aria-hidden="true" ref={ruleRef} />
 
-            <p className="hero-intro font-body">
+            <p className="hero-intro font-body" ref={introRef}>
               Over four decades of experience across film,
               television, OTT and entertainment management.
             </p>
 
-            <div className="hero-action">
+            <div className="hero-action" ref={actionRef}>
               <MagneticButton href="tel:+919867343123" variant="dark">
                 Call Us Now
               </MagneticButton>
@@ -263,7 +314,7 @@ export const HeroSection: React.FC = () => {
             zIndex: 2,
           }}
         >
-          <p className="editorial-eyebrow hero-eyebrow">
+          <p ref={eyebrowRef} className="editorial-eyebrow hero-eyebrow">
             SINCE 1977{' '}
             <span className="hero-eyebrow-sep" aria-hidden="true">
               ·
@@ -272,11 +323,11 @@ export const HeroSection: React.FC = () => {
           </p>
 
           <h1 className="hero-title font-display font-bold tracking-tight">
-            <span className="block">Babubhai</span>
-            <span className="block">Thiba</span>
+            <span className="block" ref={titleLine1Ref}>Babubhai</span>
+            <span className="block" ref={titleLine2Ref}>Thiba</span>
           </h1>
 
-          <div className="hero-roles">
+          <div className="hero-roles" ref={rolesRef}>
             <span className="block">
               Producer{' '}
               <span className="hero-pipe" aria-hidden="true">
@@ -293,15 +344,16 @@ export const HeroSection: React.FC = () => {
             </span>
           </div>
 
-          <div className="hero-rule" aria-hidden="true" />
+          <div className="hero-rule" aria-hidden="true" ref={ruleRef} />
 
-          <p className="hero-intro font-body">
+          <p className="hero-intro font-body" ref={introRef}>
             Over four decades of experience across film,
             television, OTT and entertainment management.
           </p>
 
           <div
             className="hero-action"
+            ref={actionRef}
             style={{
               display: 'flex',
               justifyContent: 'center',

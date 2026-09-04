@@ -18,9 +18,10 @@ export const AboutSection: React.FC = () => {
   const portraitRef = useRef<HTMLDivElement>(null);
   const portraitParallaxRef = useRef<HTMLDivElement>(null);
 
+  const ctxRef = useRef<gsap.Context | null>(null);
+
   useEffect(() => {
     const section = sectionRef.current;
-
     if (!section) return;
 
     const prefersReducedMotion = window.matchMedia(
@@ -33,166 +34,133 @@ export const AboutSection: React.FC = () => {
 
     if (prefersReducedMotion) return;
 
-    const ctx = gsap.context(() => {
-      /*
-       * ==========================================
-       * INITIAL STATES
-       * ==========================================
-       */
+    /*
+     * ==========================================
+     * STEP 1 — HIDE IMMEDIATELY ON MOUNT
+     * Set all animated elements to their hidden
+     * start states right away, before any timer.
+     * This ensures they are invisible while the
+     * page is still loading / hero is animating.
+     * ==========================================
+     */
+    gsap.set(headingRef.current, { opacity: 0, y: 45 });
+    gsap.set(bioRef.current,     { opacity: 0, y: 35 });
+    gsap.set(factsRef.current,   { opacity: 0, y: 30 });
+    gsap.set(portraitRef.current, { opacity: 0, y: 50, scale: 0.96 });
+    if (portraitParallaxRef.current) {
+      gsap.set(portraitParallaxRef.current, { clipPath: "inset(0 0 100% 0)" });
+    }
 
-      gsap.set(headingRef.current, {
-        opacity: 0,
-        y: 45,
-      });
+    /*
+     * ==========================================
+     * STEP 2 — REGISTER SCROLL TRIGGERS AFTER
+     * a short delay so they are created AFTER
+     * App.tsx's ScrollTrigger.refresh() calls
+     * have all settled. Without this delay the
+     * "once: true" text timeline can fire during
+     * the post-load refresh (while elements are
+     * invisible), consuming the one-shot and
+     * never visibly animating on user scroll.
+     * ==========================================
+     */
+    const setupTimer = setTimeout(() => {
+      ctxRef.current = gsap.context(() => {
 
-      gsap.set(bioRef.current, {
-        opacity: 0,
-        y: 35,
-      });
-
-      gsap.set(factsRef.current, {
-        opacity: 0,
-        y: 30,
-      });
-
-      gsap.set(portraitRef.current, {
-        opacity: 0,
-        y: 50,
-        scale: 0.96,
-      });
-
-      /*
-       * ==========================================
-       * IMAGE REVEAL INITIAL STATE
-       * ==========================================
-       */
-
-      if (portraitParallaxRef.current) {
-        gsap.set(portraitParallaxRef.current, {
-          clipPath: "inset(0 0 100% 0)",
+        /* ---- TEXT ANIMATION ---- */
+        const textTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top 85%",
+            toggleActions: "play none none none",
+            once: true,
+          },
         });
-      }
 
-      /*
-       * ==========================================
-       * TEXT SCROLL ANIMATION
-       * ==========================================
-       */
-
-      const textTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top 75%",
-          toggleActions: "play none none none",
-          once: true,
-        },
-      });
-
-      textTimeline
-        .to(headingRef.current, {
-          opacity: 1,
-          y: 0,
-          duration: 0.9,
-          ease: "power3.out",
-        })
-        .to(
-          bioRef.current,
-          {
+        textTimeline
+          .to(headingRef.current, {
             opacity: 1,
             y: 0,
-            duration: 0.8,
+            duration: 0.9,
             ease: "power3.out",
-          },
-          "-=0.55",
-        )
-        .to(
-          factsRef.current,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            ease: "power3.out",
-          },
-          "-=0.45",
-        );
-
-      /*
-       * ==========================================
-       * IMAGE ENTRANCE ANIMATION
-       * ==========================================
-       */
-
-      const imageTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: portraitRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-          once: true,
-        },
-      });
-
-      imageTimeline
-        .to(portraitRef.current, {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 1.1,
-          ease: "power3.out",
-        })
-        .to(
-          portraitParallaxRef.current,
-          {
-            clipPath: "inset(0 0 0% 0)",
-            duration: 1.2,
-            ease: "power3.inOut",
-          },
-          "-=0.9",
-        );
-
-      /*
-       * ==========================================
-       * IMAGE PARALLAX
-       *
-       * DESKTOP ONLY
-       * ==========================================
-       */
-
-      if (
-        !isTouchDevice &&
-        portraitParallaxRef.current &&
-        portraitRef.current
-      ) {
-        gsap.fromTo(
-          portraitParallaxRef.current,
-          {
-            y: -20,
-          },
-          {
-            y: 20,
-            ease: "none",
-            scrollTrigger: {
-              trigger: portraitRef.current,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1.5,
+          })
+          .to(
+            bioRef.current,
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              ease: "power3.out",
             },
+            "-=0.55",
+          )
+          .to(
+            factsRef.current,
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              ease: "power3.out",
+            },
+            "-=0.45",
+          );
+
+        /* ---- IMAGE ENTRANCE ---- */
+        const imageTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: portraitRef.current,
+            start: "top 90%",
+            toggleActions: "play none none none",
+            once: true,
           },
-        );
-      }
+        });
 
-      /*
-       * ==========================================
-       * REFRESH SCROLLTRIGGER
-       * ==========================================
-       */
+        imageTimeline
+          .to(portraitRef.current, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 1.1,
+            ease: "power3.out",
+          })
+          .to(
+            portraitParallaxRef.current,
+            {
+              clipPath: "inset(0 0 0% 0)",
+              duration: 1.2,
+              ease: "power3.inOut",
+            },
+            "-=0.9",
+          );
 
-      requestAnimationFrame(() => {
+        /* ---- IMAGE PARALLAX (desktop only) ---- */
+        if (
+          !isTouchDevice &&
+          portraitParallaxRef.current &&
+          portraitRef.current
+        ) {
+          gsap.fromTo(
+            portraitParallaxRef.current,
+            { y: -20 },
+            {
+              y: 20,
+              ease: "none",
+              scrollTrigger: {
+                trigger: portraitRef.current,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1.5,
+              },
+            },
+          );
+        }
+
         ScrollTrigger.refresh();
-      });
-    }, sectionRef);
+      }, sectionRef);
+    }, 700); // wait for App.tsx's post-load refresh calls to settle
 
     return () => {
-      ctx.revert();
+      clearTimeout(setupTimer);
+      ctxRef.current?.revert();
     };
   }, []);
 

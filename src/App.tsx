@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -19,6 +18,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [heroReady, setHeroReady] = useState(false);
   const lenisRef = useRef<Lenis | null>(null);
 
   /* ---------------------------------------------------------
@@ -100,6 +100,8 @@ export function App() {
 
       requestAnimationFrame(() => {
         ScrollTrigger.refresh();
+        // Re-refresh after the slide-up reveal animation fully settles
+        setTimeout(() => ScrollTrigger.refresh(), 900);
       });
     });
   }, [isLoading]);
@@ -182,48 +184,26 @@ export function App() {
       {isLoading && (
         <LoadingScreen
           onComplete={() => {
-            // Make sure we are still at the top
+            // Called after the slide-up exit animation fully completes
             window.scrollTo(0, 0);
-
-            // Only then remove loading screen
             setIsLoading(false);
+            // Signal Hero to begin its entrance animation
+            setHeroReady(true);
           }}
         />
       )}
 
       {/* -----------------------------------------------------
-          MAIN WEBSITE
+          MAIN WEBSITE — stationary, loading screen slides away
       ----------------------------------------------------- */}
-      <motion.div
-        initial={{
-          opacity: 0,
-          clipPath: 'circle(0% at 50% 50%)',
-        }}
-        animate={{
-          opacity: isLoading ? 0 : 1,
-          clipPath: isLoading
-            ? 'circle(0% at 50% 50%)'
-            : 'circle(150% at 50% 50%)',
-        }}
-        transition={{
-          opacity: {
-            duration: isLoading ? 0 : 0.15,
-          },
-          clipPath: {
-            duration: isLoading ? 0 : 0.9,
-            ease: [0.76, 0, 0.24, 1],
-            delay: isLoading ? 0 : 0.05,
-          },
-        }}
+      <div
         className="min-h-screen"
-        style={{
-          backgroundColor: 'var(--bg-dark)',
-        }}
+        style={{ backgroundColor: 'var(--bg-dark)' }}
       >
         <Navigation onNavigate={handleNavigate} />
 
         <main>
-          <HeroSection />
+          <HeroSection ready={heroReady} />
           <AboutSection />
           <StatsSection />
           <ExperienceSection />
@@ -233,7 +213,7 @@ export function App() {
         </main>
 
         <FooterSection onNavigate={handleNavigate} />
-      </motion.div>
+      </div>
     </>
   );
 }

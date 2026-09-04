@@ -173,12 +173,12 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
             backgroundColor: 'var(--bg-dark)',
           }}
           initial={{
-            opacity: 1,
+            y: 0,
           }}
           exit={{
-            opacity: 0,
+            y: '-100%',
             transition: {
-              duration: 0.45,
+              duration: 0.7,
               ease: [0.76, 0, 0.24, 1],
             },
           }}

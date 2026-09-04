@@ -176,7 +176,7 @@ export const ExperienceSection: React.FC = () => {
             >
               <div className="flex items-center gap-4">
                 <span
-                  className="editorial-eyebrow shrink-0"
+                  className="editorial-eyebrow shrink-0 exp-number-mobile-hide"
                   style={{ color: 'var(--accent)' }}
                 >
                   {(idx + 1).toString().padStart(2, '0')}
@@ -199,7 +199,7 @@ export const ExperienceSection: React.FC = () => {
                 </h3>
               </div>
               <p
-                className="font-body leading-relaxed pl-8 md:pl-10"
+                className="font-body leading-relaxed md:pl-10"
                 style={{
                   color: 'rgba(33, 28, 24, 0.7)',
                   fontSize: 'clamp(0.9rem, 1.1vw, 1.05rem)',
