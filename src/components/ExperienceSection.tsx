@@ -26,7 +26,7 @@ const EXPERIENCES: ExperienceItem[] = [
         Produced TV serials <em>Mr. Dhansukh</em> (written by and starring Kadar
         Khan) on Doordarshan, <em>Haal Kaisa Hai Janab Ka</em> on Sony TV, and{' '}
         <em>Badalte Rishtey</em> on Zee TV, along with the Urdu serial{' '}
-        <em>Bachelor</em> and a Gujarati show, both on ETV.
+        <em>Bachelor</em> and a Gujarati reality show, both on ETV.
       </>
     ),
   },
@@ -34,7 +34,7 @@ const EXPERIENCES: ExperienceItem[] = [
     label: 'Gujarati Films',
     description: (
       <>
-        Produced three Gujarati films — <em>Parali Thapan</em>,{' '}
+        Produced three Gujarati films — <em>Paraki Thapan</em>,{' '}
         <em>Pankhi No Malo</em>, and <em>Pooja Na Phool</em> — all three
         box-office hits.
       </>
@@ -76,16 +76,11 @@ const EXPERIENCES: ExperienceItem[] = [
     label: 'Ad Films',
     description: '450+ Ads produced for various clients.',
   },
-  {
-    label: 'Journalism',
-    description: (
-      <>
-        Worked as Assistant Editor at a well-known All India daily newspaper and
-        as a columnist for various magazines for 25 years; publishes the{' '}
-        <em>Show World</em> film directory, ongoing for 25 years.
-      </>
-    ),
-  },
+ {
+  label: 'Journalism',
+  description:
+    'Worked as Assistant Editor at a leading daily newspaper and at All India Radio; also worked as a columnist for various magazines for 25 years and publishes the Show World film directory, ongoing for 25 years.',
+},
   {
     label: 'Consultant',
     description:
