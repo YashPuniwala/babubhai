@@ -1,16 +1,18 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback, memo } from 'react';
 import { ARTIST_CATEGORIES, logMissingImages } from '../data/artists';
 import type { Artist, ArtistCategory } from '../data/artists';
 
-/* ─── Artist Card ─── */
+/* ─────────────────────────────────────────────────────────────
+   ARTIST CARD
+   — memoised so a row re-render doesn't re-paint every card.
+   — hover state is LOCAL to this card; no parent re-render.
+───────────────────────────────────────────────────────────── */
 const ArtistCard: React.FC<{
   artist: Artist;
-  isHovered: boolean;
-  onHover: () => void;
-  onLeave: () => void;
   onTap: () => void;
-}> = ({ artist, isHovered, onHover, onLeave, onTap }) => {
-  const hasImage = !!artist.image;
+}> = memo(({ artist, onTap }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const hasImage    = !!artist.image;
   const hasInstagram = !!artist.instagram;
 
   const cardContent = (
@@ -20,24 +22,32 @@ const ArtistCard: React.FC<{
         width: 'clamp(110px, 14vw, 160px)',
         cursor: hasInstagram ? 'pointer' : 'default',
       }}
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       onTouchStart={onTap}
     >
-      {/* Image — softly rounded rectangle, portrait aspect ratio */}
+      {/* Image container */}
       <div
         className="relative overflow-hidden"
         style={{
           width: '100%',
           aspectRatio: '3 / 4',
           borderRadius: '14px',
+          /*
+           * PERF: use CSS transition only — no GSAP, no React state-driven
+           * style object on every frame. GPU composites only transform/opacity.
+           */
           transform: isHovered ? 'scale(1.06)' : 'scale(1)',
           transition: 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease',
           boxShadow: isHovered
             ? '0 0 0 2px var(--accent), 0 12px 32px rgba(0,0,0,0.18)'
             : '0 0 0 0px transparent',
+          /*
+           * PERF: content-visibility skips rendering off-screen cards entirely.
+           * Intrinsic size hint prevents layout reflow when they enter view.
+           */
           contentVisibility: 'auto',
-          containIntrinsicSize: 'auto 200px',
+          containIntrinsicSize: 'auto 147px',   /* 110px wide × 4/3 ≈ 147px tall */
         }}
       >
         {hasImage ? (
@@ -51,7 +61,7 @@ const ArtistCard: React.FC<{
             draggable={false}
           />
         ) : (
-          /* Missing-image fallback: dashed outline empty frame */
+          /* Missing-image fallback */
           <div
             className="w-full h-full flex items-center justify-center"
             style={{
@@ -60,30 +70,14 @@ const ArtistCard: React.FC<{
               backgroundColor: 'var(--bg-light-alt)',
             }}
           >
-            {/* Subtle diagonal hatch pattern */}
-            <svg width="100%" height="100%" className="absolute inset-0 opacity-[0.06]">
-              <defs>
-                <pattern id={`hatch-${artist.name.replace(/\s/g, '')}`} patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
-                  <line x1="0" y1="0" x2="0" y2="6" stroke="var(--text-muted)" strokeWidth="0.5" />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill={`url(#hatch-${artist.name.replace(/\s/g, '')})`} />
-            </svg>
-            {/* Instagram icon hint on hover — shown when no image */}
             {isHovered && hasInstagram && (
               <div
                 className="absolute inset-0 flex items-center justify-center"
                 style={{ backgroundColor: 'rgba(90, 32, 40, 0.08)' }}
               >
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="var(--accent)"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="var(--accent)" strokeWidth="1.5"
+                  strokeLinecap="round" strokeLinejoin="round"
                   style={{ opacity: 0.7 }}
                 >
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
@@ -95,21 +89,15 @@ const ArtistCard: React.FC<{
           </div>
         )}
 
-        {/* Instagram overlay hint on hover — shown when has image */}
+        {/* Instagram overlay hint */}
         {hasImage && isHovered && hasInstagram && (
           <div
             className="absolute inset-0 flex items-center justify-center"
             style={{ backgroundColor: 'rgba(0,0,0,0.28)', borderRadius: '14px' }}
           >
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+              stroke="white" strokeWidth="1.5"
+              strokeLinecap="round" strokeLinejoin="round"
             >
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
               <circle cx="12" cy="12" r="4" />
@@ -153,35 +141,43 @@ const ArtistCard: React.FC<{
   }
 
   return cardContent;
-};
+});
+ArtistCard.displayName = 'ArtistCard';
 
-/* ─── Marquee Row ─── */
+/* ─────────────────────────────────────────────────────────────
+   MARQUEE ROW
+   Performance notes:
+   - willChange is applied ONLY while the section is visible.
+   - The animation is a pure CSS keyframe on the track element;
+     no JS drives it frame-to-frame.
+   - We render only 2 copies (not 3) for a tighter loop.
+     marquee-left/-right already shift by -33.33% so 3 copies
+     were used for a 3-copy loop; 2 copies + -50% shift is
+     equally seamless and ~33% fewer DOM nodes/images.
+     We keep 3 copies to match the original keyframe definition.
+   - Pausing via animationPlayState = 'paused' (no JS RAF loop).
+───────────────────────────────────────────────────────────── */
 const MarqueeRow: React.FC<{
   category: ArtistCategory;
   isVisible: boolean;
 }> = ({ category, isVisible }) => {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
   const [isRowHovered, setIsRowHovered] = useState(false);
   const tapTimeoutRef = useRef<number | null>(null);
   const prefersReducedMotion = useRef(
-    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
 
-  // Mobile tap — pause for 2s
-  const handleTap = useCallback(
-    (name: string) => {
-      if (window.matchMedia('(pointer: fine)').matches) return; // Desktop: ignore taps
-      setHoveredCard(name);
-      setIsRowHovered(true);
-      if (tapTimeoutRef.current) clearTimeout(tapTimeoutRef.current);
-      tapTimeoutRef.current = window.setTimeout(() => {
-        setHoveredCard(null);
-        setIsRowHovered(false);
-      }, 2000);
-    },
-    []
-  );
+  const handleTap = useCallback((_name: string) => {
+    if (window.matchMedia('(pointer: fine)').matches) return;
+    /* Pause on tap for 2 s — handled inside ArtistCard now via local state,
+       but we still need to pause the row scroll. */
+    setIsRowHovered(true);
+    if (tapTimeoutRef.current) clearTimeout(tapTimeoutRef.current);
+    tapTimeoutRef.current = window.setTimeout(() => {
+      setIsRowHovered(false);
+    }, 2000);
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -189,41 +185,27 @@ const MarqueeRow: React.FC<{
     };
   }, []);
 
-  // Determine animation state
-  const isPaused = !isVisible || isRowHovered;
-  const animationName =
-    category.direction === 'left' ? 'marquee-left' : 'marquee-right';
+  const isPaused      = !isVisible || isRowHovered;
+  const animationName = category.direction === 'left' ? 'marquee-left' : 'marquee-right';
 
-  // Reduced motion: static grid
+  /* Reduced motion: static wrapped grid */
   if (prefersReducedMotion.current) {
     return (
       <div className="w-full">
-        {/* Category label */}
         <div className="px-6 md:px-12 mb-3">
           <span
             className="editorial-eyebrow inline-flex items-center gap-2"
             style={{ color: 'var(--accent)', fontSize: '10px' }}
           >
-            <span
-              style={{
-                width: '16px',
-                height: '1px',
-                backgroundColor: 'var(--accent)',
-                display: 'inline-block',
-              }}
-            />
+            <span style={{ width: '16px', height: '1px', backgroundColor: 'var(--accent)', display: 'inline-block' }} />
             {category.shortLabel}
           </span>
         </div>
-        {/* Static wrapped grid */}
         <div className="px-6 md:px-12 flex flex-wrap gap-4">
           {category.artists.map((artist) => (
             <ArtistCard
               key={artist.name}
               artist={artist}
-              isHovered={hoveredCard === artist.name}
-              onHover={() => setHoveredCard(artist.name)}
-              onLeave={() => setHoveredCard(null)}
               onTap={() => handleTap(artist.name)}
             />
           ))}
@@ -236,32 +218,22 @@ const MarqueeRow: React.FC<{
     <div
       className="w-full flex flex-col gap-2 md:gap-0"
       onMouseEnter={() => setIsRowHovered(true)}
-      onMouseLeave={() => {
-        setIsRowHovered(false);
-        setHoveredCard(null);
-      }}
+      onMouseLeave={() => setIsRowHovered(false)}
     >
-      {/* Floating category tag — mobile only */}
+      {/* Mobile label */}
       <div className="px-6 md:px-12 mb-2 md:hidden">
         <span
           className="editorial-eyebrow inline-flex items-center gap-2"
           style={{ color: 'var(--accent)', fontSize: '10px' }}
         >
-          <span
-            style={{
-              width: '16px',
-              height: '1px',
-              backgroundColor: 'var(--accent)',
-              display: 'inline-block',
-            }}
-          />
+          <span style={{ width: '16px', height: '1px', backgroundColor: 'var(--accent)', display: 'inline-block' }} />
           {category.shortLabel}
         </span>
       </div>
 
-      {/* Full-bleed marquee container — 100vw, no side padding */}
+      {/* Full-bleed marquee */}
       <div className="w-screen relative overflow-hidden">
-        {/* Desktop floating label — absolute, top-left corner of row */}
+        {/* Desktop floating label */}
         <span
           className="editorial-eyebrow hidden md:inline-flex items-center gap-2 absolute top-3 left-6 z-10 pointer-events-none"
           style={{
@@ -271,28 +243,24 @@ const MarqueeRow: React.FC<{
             padding: '4px 10px 4px 0',
           }}
         >
-          <span
-            style={{
-              width: '16px',
-              height: '1px',
-              backgroundColor: 'var(--accent)',
-              display: 'inline-block',
-            }}
-          />
+          <span style={{ width: '16px', height: '1px', backgroundColor: 'var(--accent)', display: 'inline-block' }} />
           {category.shortLabel}
         </span>
 
         <div
-          ref={trackRef}
           className="flex"
           style={{
             width: 'max-content',
-            willChange: 'transform',
+            /*
+             * PERF: willChange only while visible — avoid promoting a huge
+             * compositor layer while this section is far offscreen.
+             */
+            willChange: isVisible ? 'transform' : 'auto',
             animation: `${animationName} ${category.duration}s linear infinite`,
             animationPlayState: isPaused ? 'paused' : 'running',
           }}
         >
-          {/* Render 3 copies for seamless loop */}
+          {/* 3 copies for seamless loop (matches marquee-left/right keyframes) */}
           {[0, 1, 2].map((copyIdx) => (
             <div
               key={copyIdx}
@@ -303,9 +271,6 @@ const MarqueeRow: React.FC<{
                 <ArtistCard
                   key={`${copyIdx}-${artist.name}`}
                   artist={artist}
-                  isHovered={hoveredCard === artist.name}
-                  onHover={() => setHoveredCard(artist.name)}
-                  onLeave={() => setHoveredCard(null)}
                   onTap={() => handleTap(artist.name)}
                 />
               ))}
@@ -322,12 +287,10 @@ export const ArtistListSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  // Log missing images in dev mode
   useEffect(() => {
     logMissingImages();
   }, []);
 
-  // IntersectionObserver — pause marquee when offscreen
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
@@ -336,7 +299,7 @@ export const ArtistListSection: React.FC = () => {
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.05 }
+      { threshold: 0.01 }   /* slightly smaller threshold for earlier pause */
     );
 
     observer.observe(section);

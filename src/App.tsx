@@ -12,6 +12,7 @@ import { ExperienceSection } from './components/ExperienceSection';
 import { ArtistListSection } from './components/ArtistListSection';
 import { AchievementsSection } from './components/AchievementsSection';
 import { ServicesSection } from './components/ServicesSection';
+import { ConnectSection } from './components/ConnectSection';
 import { FooterSection } from './components/FooterSection';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -210,6 +211,7 @@ export function App() {
           <ArtistListSection />
           <AchievementsSection />
           <ServicesSection />
+          <ConnectSection />
         </main>
 
         <FooterSection onNavigate={handleNavigate} />

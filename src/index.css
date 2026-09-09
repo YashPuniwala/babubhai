@@ -27,7 +27,8 @@
     font-family: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    scroll-behavior: auto; /* Lenis handles smooth scroll */
+    scroll-behavior: auto;
+    /* Lenis handles smooth scroll */
   }
 
   body {
@@ -66,38 +67,82 @@
 }
 
 /* ─── Fluid Typography ─── */
-.clamp-hero  { font-size: clamp(6rem, 20vw, 28rem); line-height: 0.85; }
-.clamp-h1    { font-size: clamp(3.5rem, 12vw, 16rem); line-height: 0.88; }
-.clamp-h2    { font-size: clamp(2.25rem, 6vw, 5rem); line-height: 1; }
-.clamp-h3    { font-size: clamp(1.25rem, 3vw, 2.5rem); line-height: 1.1; }
-.clamp-body  { font-size: clamp(1rem, 1.15vw, 1.125rem); line-height: 1.65; }
+.clamp-hero {
+  font-size: clamp(6rem, 20vw, 28rem);
+  line-height: 0.85;
+}
+
+.clamp-h1 {
+  font-size: clamp(3.5rem, 12vw, 16rem);
+  line-height: 0.88;
+}
+
+.clamp-h2 {
+  font-size: clamp(2.25rem, 6vw, 5rem);
+  line-height: 1;
+}
+
+.clamp-h3 {
+  font-size: clamp(1.25rem, 3vw, 2.5rem);
+  line-height: 1.1;
+}
+
+.clamp-body {
+  font-size: clamp(1rem, 1.15vw, 1.125rem);
+  line-height: 1.65;
+}
 
 /* ─── Marquee Keyframes ─── */
 @keyframes marquee-left {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-33.3333%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-33.3333%);
+  }
 }
 
 @keyframes marquee-right {
-  0%   { transform: translateX(-33.3333%); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(-33.3333%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }
 
 /* ─── Scroll Cue Animation ─── */
 @keyframes scroll-cue {
-  0%   { transform: translateY(-100%); opacity: 0; }
-  20%  { opacity: 1; }
-  80%  { opacity: 1; }
-  100% { transform: translateY(300%); opacity: 0; }
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(300%);
+    opacity: 0;
+  }
 }
 
 @keyframes hero-paper-drift {
   0% {
     transform: translate3d(-3px, -2px, 0) scale(1.035);
   }
+
   50% {
     transform: translate3d(2px, 3px, 0) scale(1.035);
   }
+
   100% {
     transform: translate3d(-2px, 1px, 0) scale(1.035);
   }
@@ -105,21 +150,29 @@
 
 /* ─── Iris Blade Rotation ─── */
 @keyframes iris-rotate {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(15deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(15deg);
+  }
 }
 
 /* ─── Custom Scrollbar ─── */
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--bg-dark);
 }
+
 ::-webkit-scrollbar-thumb {
   background: rgba(90, 32, 40, 0.3);
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(90, 32, 40, 0.6);
 }
@@ -128,6 +181,7 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -205,7 +259,7 @@ img {
   letter-spacing: -0.055em;
 }
 
-.hero-title > span {
+.hero-title>span {
   display: block;
 }
 
@@ -263,16 +317,7 @@ img {
   display: none;
 }
 
-.hero-portrait-stage::after {
-  content: "";
-  position: absolute;
-  top: 24%;
-  right: 6%;
-  width: 1px;
-  height: 48%;
-  background: linear-gradient(to bottom, transparent, rgba(90, 32, 40, 0.3), transparent);
-  pointer-events: none;
-}
+
 
 .hero-portrait {
   position: relative;
@@ -317,9 +362,17 @@ img {
 }
 
 @media (max-width: 480px) {
-  .clamp-hero { font-size: clamp(4rem, 18vw, 7rem); }
-  .clamp-h1 { font-size: clamp(3rem, 14vw, 6rem); }
-  .clamp-h2 { font-size: clamp(2rem, 12vw, 3rem); }
+  .clamp-hero {
+    font-size: clamp(4rem, 18vw, 7rem);
+  }
+
+  .clamp-h1 {
+    font-size: clamp(3rem, 14vw, 6rem);
+  }
+
+  .clamp-h2 {
+    font-size: clamp(2rem, 12vw, 3rem);
+  }
 }
 
 @media (max-width: 767px) {
@@ -393,11 +446,7 @@ img {
     display: none;
   }
 
-  .hero-portrait-stage::after {
-    top: 23%;
-    right: 8%;
-    height: 47%;
-  }
+
 
   .hero-portrait {
     width: 108vw;
@@ -440,6 +489,7 @@ img {
 
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {

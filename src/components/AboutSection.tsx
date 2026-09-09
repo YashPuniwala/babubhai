@@ -44,8 +44,8 @@ export const AboutSection: React.FC = () => {
      * ==========================================
      */
     gsap.set(headingRef.current, { opacity: 0, y: 45 });
-    gsap.set(bioRef.current,     { opacity: 0, y: 35 });
-    gsap.set(factsRef.current,   { opacity: 0, y: 30 });
+    gsap.set(bioRef.current, { opacity: 0, y: 35 });
+    gsap.set(factsRef.current, { opacity: 0, y: 30 });
     gsap.set(portraitRef.current, { opacity: 0, y: 50, scale: 0.96 });
     if (portraitParallaxRef.current) {
       gsap.set(portraitParallaxRef.current, { clipPath: "inset(0 0 100% 0)" });
@@ -126,7 +126,7 @@ export const AboutSection: React.FC = () => {
             portraitParallaxRef.current,
             {
               clipPath: "inset(0 0 0% 0)",
-              duration: 1.2,
+              duration: 0.7,
               ease: "power3.inOut",
             },
             "-=0.9",
