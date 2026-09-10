@@ -259,7 +259,7 @@ export const Navigation: React.FC<NavigationProps> = ({
             DESKTOP NAV
         ========================== */}
 
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-8" aria-label="Main navigation">
           {navLinks.map((item) => (
             <a
               key={item.label}

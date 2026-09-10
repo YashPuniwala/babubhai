@@ -254,7 +254,7 @@ export const AboutSection: React.FC = () => {
               >
                 <img
                   src="/images/babubhai_about.png"
-                  alt="Babubhai Thiba"
+                  alt="Babubhai Thiba, veteran Mumbai film producer and celebrity manager"
                   className="
                     block
                     h-auto

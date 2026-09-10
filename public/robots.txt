@@ -1,0 +1,5 @@
+# robots.txt — babubhaithiba.in
+User-agent: *
+Allow: /
+
+Sitemap: https://www.babubhaithiba.in/sitemap.xml

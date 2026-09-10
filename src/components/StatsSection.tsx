@@ -11,7 +11,7 @@ const STATS: Stat[] = [
   { icon: '\u{1F3AC}', target: 150, suffix: '+', label: 'Ads' },
   { icon: '\u{1F3A5}', target: 200, suffix: '+', label: 'Films' },
   { icon: '\u{1F4F0}', target: 15, suffix: '', label: 'Years Journalism' },
-  { icon: '\u{1F4DA}', target: 15, suffix: '', label: 'Years Publisher' },
+  { icon: '\u{1F4DA}', target: 25, suffix: '', label: 'Years Publisher' },
 ];
 
 function useCountUp(target: number, duration: number, triggered: boolean) {
